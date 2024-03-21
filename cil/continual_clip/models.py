@@ -134,7 +134,7 @@ class ClassIncremental(nn.Module):
             if cfg.method in ["ZSCL"]:
                 assert cfg.ref_dataset == "conceptual_captions"
                 print(f"[Ref Dataset] conceptual_captions")
-                ref_dataset = conceptual_captions(
+                ref_object = conceptual_captions(
                     test_preprocess,
                     location="./Continual-CLIP/data", 
                     batch_size=cfg.batch_size,
@@ -150,6 +150,8 @@ class ClassIncremental(nn.Module):
                 
             if cfg.method in ["iCaRL"]:
                 ref_iter = batch(ref_dataset)
+            elif cfg.method in ["ZSCL"]:
+                ref_iter = iter(ref_object.train_loader)
             else:
                 ref_iter = iter(ref_dataset)
 
